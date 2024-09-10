@@ -122,25 +122,17 @@ exporters:
         insecure: true
 
 #json
+  otlphttp/traces:
+    encoding: json
+    endpoint: http://192.168.0.40:13030/otlp/json
+  
   otlphttp/metrics:
     encoding: json
-    endpoint: http://192.168.0.40:13030/otlp/original/json
- 
-  otlphttp/filtered_traces:
-    encoding: json
-    endpoint: http://192.168.0.40:13030/otlp/filtered/json
+    endpoint: http://192.168.0.40:13030/otlp/json
 
-  otlphttp/filtered_logs:
+  otlphttp/logs:
     encoding: json
-    endpoint: http://192.168.0.40:13030/otlp/filtered/json
-
-  otlphttp/original_traces:
-    encoding: json
-    endpoint: http://192.168.0.40:13030/otlp/original/json
-
-  otlphttp/original_logs:
-    encoding: json
-    endpoint: http://192.168.0.40:13030/otlp/original/json	
+    endpoint: http://192.168.0.40:13030/otlp/json
 
 
 #protobuf
@@ -207,7 +199,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [transform, batch]
-      exporters: [otlp, debug, spanmetrics, otlphttp/original_traces]
+      exporters: [otlp, debug, spanmetrics]
     metrics:
       receivers: [hostmetrics, docker_stats, httpcheck/frontendproxy, otlp, prometheus, redis, spanmetrics]
       processors: [batch]
@@ -215,17 +207,17 @@ service:
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [opensearch, debug, otlphttp/original_logs]
+      exporters: [opensearch, debug]
       
     logs/filtered:
       receivers: [otlp]
       processors: [batch, filter/logs]
-      exporters: [file/filtered_logs, otlphttp/filtered_logs]
+      exporters: [file/filtered_logs, otlphttp/logs]
       
     traces/error:
       receivers: [otlp]
       processors: [filter/error_spans]
-      exporters: [file/filtered_span , otlphttp/filtered_traces]
+      exporters: [file/filtered_span , otlphttp/traces]
 
     traces/test:
       receivers: [otlp]
