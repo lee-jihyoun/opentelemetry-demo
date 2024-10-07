@@ -159,7 +159,7 @@ processors:
   filter/logs:
     logs:
       log_record:
-        - 'severity_number < 10'
+        - 'severity_number < 9'
         
   filter/error_spans:
     traces:
@@ -199,15 +199,15 @@ service:
     traces:
       receivers: [otlp]
       processors: [transform, batch]
-      exporters: [otlp, debug, spanmetrics]
+      exporters: [file/original_span, otlp, debug, spanmetrics]
     metrics:
       receivers: [hostmetrics, docker_stats, httpcheck/frontendproxy, otlp, prometheus, redis, spanmetrics]
       processors: [batch]
-      exporters: [otlphttp/prometheus, debug, otlphttp/metrics]
+      exporters: [file/metrics, otlphttp/prometheus, debug, otlphttp/metrics]
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [opensearch, debug]
+      exporters: [file/original_logs, opensearch, debug]
       
     logs/filtered:
       receivers: [otlp]
