@@ -37,7 +37,7 @@ services:
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_RESOURCE_ATTRIBUTES=service.code=AC1001,service.name=accountingservice
       - OTEL_SERVICE_NAME=accountingservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
     depends_on:
       otelcol:
         condition: service_started
@@ -70,7 +70,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.code=AD1002,service.name=adservice
       - OTEL_LOGS_EXPORTER=otlp
       - OTEL_SERVICE_NAME=adservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -104,7 +104,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.code=CA1003,service.name=cartservice
       - OTEL_SERVICE_NAME=cartservice
       - ASPNETCORE_URLS=http://*:${CART_SERVICE_PORT}
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       valkey-cart:
@@ -146,7 +146,7 @@ services:
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_RESOURCE_ATTRIBUTES=service.code=CH1004,service.name=checkoutservice
       - OTEL_SERVICE_NAME=checkoutservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       cartservice:
@@ -190,7 +190,7 @@ services:
       - VERSION=${IMAGE_VERSION}
       - OTEL_EXPORTER_OTLP_ENDPOINT
       - OTEL_RESOURCE_ATTRIBUTES=${OTEL_RESOURCE_ATTRIBUTES},service.name=currencyservice,service.code=CU1005   # The C++ SDK does not support OTEL_SERVICE_NAME
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -219,7 +219,7 @@ services:
       - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_HTTP}/v1/traces
       - OTEL_RESOURCE_ATTRIBUTES
       - OTEL_RESOURCE_ATTRIBUTES=service.code=EM1006,service.name=emailservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -250,7 +250,7 @@ services:
       - OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED=true
       - OTEL_RESOURCE_ATTRIBUTES=service.code=FR1007,service.name=frauddetectionservice
       - OTEL_SERVICE_NAME=frauddetectionservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -295,7 +295,7 @@ services:
       - OTEL_COLLECTOR_HOST
       - FLAGD_HOST
       - FLAGD_PORT
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       adservice:
@@ -355,7 +355,7 @@ services:
       - ENVOY_PORT
       - FLAGD_HOST
       - FLAGD_PORT
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       frontend:
@@ -389,7 +389,7 @@ services:
       - OTEL_COLLECTOR_PORT_GRPC
       - OTEL_SERVICE_NAME=imageprovider
       - OTEL_RESOURCE_ATTRIBUTES
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -427,7 +427,7 @@ services:
       - LOCUST_WEB_HOST=0.0.0.0
       - FLAGD_HOST
       - FLAGD_PORT
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       frontend:
@@ -460,7 +460,7 @@ services:
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_RESOURCE_ATTRIBUTES=service.code=PA1010,service.name=paymentservice
       - OTEL_SERVICE_NAME=paymentservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -493,7 +493,7 @@ services:
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_RESOURCE_ATTRIBUTES=service.code=PR1011,service.name=productcatalogservice
       - OTEL_SERVICE_NAME=productcatalogservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -525,7 +525,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.code=QU1012,service.name=quoteservice
       - OTEL_SERVICE_NAME=quoteservice
       - OTEL_PHP_INTERNAL_METRICS_ENABLED=true
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -559,7 +559,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.code=RE1013,service.name=recommendationservice
       - OTEL_SERVICE_NAME=recommendationservice
       - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       productcatalogservice:
@@ -592,7 +592,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_GRPC}
       - OTEL_RESOURCE_ATTRIBUTES=service.code=SH1014,service.name=shippingservice
       - OTEL_SERVICE_NAME=shippingservice
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     depends_on:
       otelcol:
@@ -615,7 +615,7 @@ services:
       - FLAGD_METRICS_EXPORTER=otel
       - OTEL_RESOURCE_ATTRIBUTES
       - OTEL_SERVICE_NAME=flagd
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     command: [
       "start",
@@ -650,7 +650,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES
       - OTEL_SERVICE_NAME=kafka
       - KAFKA_HEAP_OPTS=-Xmx400m -Xms400m
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     healthcheck:
       test: nc -z kafka 9092
@@ -699,7 +699,7 @@ services:
     environment:
       - METRICS_STORAGE_TYPE=prometheus
       - COLLECTOR_OTLP_GRPC_HOST_PORT=${JAEGER_SERVICE_HOST}:${OTEL_COLLECTOR_PORT_GRPC}
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     logging: *logging
 
@@ -714,7 +714,7 @@ services:
     restart: unless-stopped
     environment:
       - "GF_INSTALL_PLUGINS=grafana-opensearch-datasource"
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     volumes:
       - ./src/grafana/grafana.ini:/etc/grafana/grafana.ini
@@ -751,7 +751,7 @@ services:
       - OTEL_COLLECTOR_HOST
       - OTEL_COLLECTOR_PORT_GRPC
       - OTEL_COLLECTOR_PORT_HTTP
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
   # Prometheus
   prometheus:
@@ -778,7 +778,7 @@ services:
       - "${PROMETHEUS_SERVICE_PORT}:${PROMETHEUS_SERVICE_PORT}"
     logging: *logging
     environment:
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
 
   # OpenSearch
@@ -798,7 +798,7 @@ services:
       - OPENSEARCH_JAVA_OPTS=-Xms300m -Xmx300m
       - DISABLE_INSTALL_DEMO_CONFIG=true
       - DISABLE_SECURITY_PLUGIN=true
-      - OTEL_LOG_LEVEL=debug
+      - OTEL_LOG_LEVEL=trace
 
     ulimits:
       memlock:
