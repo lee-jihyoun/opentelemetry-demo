@@ -25,14 +25,12 @@ import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +45,6 @@ import dev.openfeature.sdk.Client;
 import dev.openfeature.sdk.EvaluationContext;
 import dev.openfeature.sdk.MutableContext;
 import dev.openfeature.sdk.OpenFeatureAPI;
-
 import java.util.UUID;
 
 
@@ -140,19 +137,19 @@ public final class AdService {
         private static final String ADSERVICE_HIGH_CPU_FEATURE_FLAG = "adServiceHighCpu";
         private static final Client ffClient = OpenFeatureAPI.getInstance().getClient();
 
-        private AdServiceImpl() {
-        }
+        private AdServiceImpl() {}
 
         /**
          * Retrieves ads based on context provided in the request {@code AdRequest}.
          *
-         * @param req              the request containing context.
+         * @param req the request containing context.
          * @param responseObserver the stream observer which gets notified with the value of {@code
-         *                         AdResponse}
+         *     AdResponse}
          */
         @Override
         public void getAds(AdRequest req, StreamObserver<AdResponse> responseObserver) {
             AdService service = AdService.getInstance();
+
             // get the current span in context
             Span span = Span.current();
             try {
@@ -209,28 +206,6 @@ public final class AdService {
                     throw new StatusRuntimeException(Status.UNAVAILABLE);
                 }
 
-                //error case 시작
-                if(random.nextInt(10)==0){
-                    throw new StatusRuntimeException(Status.UNKNOWN);
-                }
-                if(random.nextInt(10)==0){
-                    throw new Exception();
-                }
-                if(random.nextInt(10)==0){
-                    List<String> list = new ArrayList<>();
-                    list.get(11);
-                }
-
-                if(random.nextInt(10)==0){
-                    String a ="a";
-                    Integer.parseInt(a);
-                }
-
-                if(random.nextInt(10)==0){
-                    Object obj = new String("test");
-                    Integer num = (Integer) obj;
-                }
-
                 if (ffClient.getBooleanValue(ADSERVICE_MANUAL_GC_FEATURE_FLAG, false, evaluationContext)) {
                     logger.warn("Feature Flag " + ADSERVICE_MANUAL_GC_FEATURE_FLAG + " enabled, performing a manual gc now");
                     GarbageCollectionTrigger gct = new GarbageCollectionTrigger();
@@ -246,8 +221,6 @@ public final class AdService {
                 span.setStatus(StatusCode.ERROR);
                 logger.log(Level.WARN, "GetAds Failed with status {}", e.getStatus());
                 responseObserver.onError(e);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -290,9 +263,7 @@ public final class AdService {
         return service;
     }
 
-    /**
-     * Await termination on the main thread since the grpc library uses daemon threads.
-     */
+    /** Await termination on the main thread since the grpc library uses daemon threads. */
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
@@ -346,9 +317,7 @@ public final class AdService {
                 .build();
     }
 
-    /**
-     * Main launches the server from the command line.
-     */
+    /** Main launches the server from the command line. */
     public static void main(String[] args) throws IOException, InterruptedException {
         // Start the RPC server. You shouldn't see any output from gRPC before this.
         logger.info("Ad service starting.");
